@@ -1,10 +1,13 @@
 # code for 5 try-except errors
 
-# NameError
-try:
-    print(x)
-except NameError:
-    print("x is not defined")
+# NameError -  I am commenting this out because it will throw an error
+# before I even get to do anything and it's quite annoying to see yellow
+# in the IDE when I wrote this error just to submit an assignment
+
+# try:
+#     print(x)
+# except NameError:
+#     print("x is not defined")
 
 # ZeroDivisionError
 try:
