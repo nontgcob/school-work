@@ -8,7 +8,7 @@ import os
 data = {}
 two_options = ["deposit", "withdraw"]
 one_option = ["check"]
-DATA_FILE = "midterm-prep/hard/atm_data.json"
+DATA_FILE = "atm_data.json"
 
 # function for loading data
 def load_data():
@@ -99,8 +99,9 @@ def do_the_rest(command):
                         except ValueError:
                             print("fail value check\t|\tlen = 3")
                             return "loop"
-                    print("fail action check\t|\tlen = 3")
-                    return "loop"
+                    else:
+                        print("fail action check\t|\tlen = 3")
+                        return "loop"
                 else:
                     print("fail name check\t|\tlen = 3")
                     return "loop"
@@ -110,10 +111,11 @@ def do_the_rest(command):
                     print("pass name check\t\t|\tlen = 2")
                     if action in one_option:
                         print("pass action check\t|\tlen = 2")
-                        callings(name, action, value) # error: `value` is not defined
+                        callings(name, action, None)
                         # break
-                    print("fail action check\t|\tlen = 2")
-                    return "loop"
+                    else:
+                        print("fail action check\t|\tlen = 2")
+                        return "loop"
                 else:
                     print("fail name check\t|\tlen = 2")
                     return "loop"
