@@ -8,7 +8,8 @@ import os
 data = {}
 two_options = ["deposit", "withdraw"]
 one_option = ["check"]
-DATA_FILE = "atm_data.json"
+# DATA_FILE = "atm_data.json"
+DATA_FILE = "test_atm_data.json"
 
 # function for loading data
 def load_data():
@@ -31,6 +32,8 @@ def deposit(name, value):
         print("account created and deposit successful")
     else:
         balance = data[name]
+        print(balance)
+        print(value)
         data[name] = balance + value
         print("deposit successful")
     save_data(data)
