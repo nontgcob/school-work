@@ -81,6 +81,7 @@ def do_the_rest(command):
                 try:
                     name, action = command.split()
                     print("pass split: split into 2 entities")
+                    # value = None
                 except:
                     print(f"fail split: result = FAIL TO SPLIT INTO 2 entities | input: {command}")
                     return "loop"
@@ -111,6 +112,7 @@ def do_the_rest(command):
                     print("pass name check\t\t|\tlen = 2")
                     if action in one_option:
                         print("pass action check\t|\tlen = 2")
+                        # callings(name, action, value) # value is missing and can be fixed by being replaced with None (see the line of code below)
                         callings(name, action, None)
                         # break
                     else:
