@@ -27,19 +27,34 @@ data = load_data()
 
 # function for depositing money
 def deposit(name, value):
+    try:
+        value = float(value)
+    except ValueError:
+        return "Invalid deposit amount. Please enter a numeric value."
+
+    if value < 0:
+        return "Cannot deposit a negative amount."
+
     if name not in data:
-        data[name] = float(value)
-        print("account created and deposit successful")
+        data[name] = value
+        message = "account created and deposit successful"
     else:
         balance = data[name]
-        print(balance)
-        print(value)
         data[name] = balance + value
-        print("deposit successful")
+        message = "deposit successful"
     save_data(data)
+    return message
 
 # function for withdrawing money
 def withdraw(name, value):
+    try:
+        value = float(value)
+    except ValueError:
+        return "Invalid withdrawal amount. Please enter a numeric value."
+    
+    if value < 0:
+        return "Cannot withdraw a negative amount."
+    
     if name not in data:
         print("can't withdraw money because you don't have a registered account")
     else:
@@ -48,85 +63,48 @@ def withdraw(name, value):
             print("sorry, you don't have enough money to withdraw")
         else:
             data[name] = balance - value
-            print("withdrawal successful")
             save_data(data)
+            print("withdrawal successful")
 
 # function for checking balance
 def check(name):
-    # try:
-    #     balance = data[name]
-    #     return f"your balance is {balance} dollars"
-    # except KeyError:
-    #     return "you don't have an account with us, to create an account, deposit money"
     if name in data:
         balance = data[name]
         return f"your balance is {balance} dollars"
     else:
-        return f"no account found for {name}"
+        return f"no account found for {name}, to create an account, deposit money"
 
 # call functions
 def callings(name, action, value):
-    print("enter action checking")
     if action == "deposit":
-        deposit(name, value)
+        return deposit(name, value)
     elif action == "withdraw":
-        withdraw(name, value)
-    elif action == "check":
-        print(check(name))
+        return withdraw(name, value)
+    else: # action can only be "check" a.k.a. action == "check"
+        return check(name)
 
 def do_the_rest(command):
-            try:
-                name, action, value = command.split()
-                print("pass split: split into 3 entities")
-            except:
-                print(f"fail split: result = FAIL TO SPLIT INTO 3 entities | input: {command}")
-                print("proceeding with 2 entities split")
+            parts = command.split()
+            if len(parts) == 3:
+                name, action, value = parts
+
+                if action not in two_options:
+                    return "loop"
                 try:
-                    name, action = command.split()
-                    print("pass split: split into 2 entities")
-                    # value = None
-                except:
-                    print(f"fail split: result = FAIL TO SPLIT INTO 2 entities | input: {command}")
+                    value = float(value)
+                except ValueError:
                     return "loop"
-            print("----------------------------------------------------")
-            if len(command.split()) == 3:
-                print("pass length check\t|\tlen = 3")
-                if isinstance(name, str): # check whether it is str or not
-                    print("pass name check\t\t|\tlen = 3")
-                    if action in two_options:
-                        print("pass action check\t|\tlen = 3")
-                        try:
-                            value = float(value)
-                            print("pass value check\t|\tlen = 3")
-                            callings(name, action, value)
-                            # break
-                        except ValueError:
-                            print("fail value check\t|\tlen = 3")
-                            return "loop"
-                    else:
-                        print("fail action check\t|\tlen = 3")
-                        return "loop"
-                else:
-                    print("fail name check\t|\tlen = 3")
-                    return "loop"
-            elif len(command.split()) == 2:
-                print("pass length check\t|\tlen = 2")
-                if isinstance(name, str):
-                    print("pass name check\t\t|\tlen = 2")
-                    if action in one_option:
-                        print("pass action check\t|\tlen = 2")
-                        # callings(name, action, value) # value is missing and can be fixed by being replaced with None (see the line of code below)
-                        callings(name, action, None)
-                        # break
-                    else:
-                        print("fail action check\t|\tlen = 2")
-                        return "loop"
-                else:
-                    print("fail name check\t|\tlen = 2")
+            elif len(parts) == 2:
+                name, action = parts
+                value = None
+
+                if action not in one_option:
                     return "loop"
             else:
-                print("fail length check\t|\tlen = 2")
                 return "loop"
+            if not name.isalpha():
+                return "loop"
+            return callings(name, action, value)
 
 # main program
 def main():
@@ -140,14 +118,14 @@ def main():
     while True:
         command = input(": ")
         if command == "clear":
-            print("\n" * 20)
-            # os.system("clear")
+            os.system("clear")
         else:
             output = do_the_rest(command)
             if output == "loop":
+                print("Invalid command. Please try again.")
                 continue
             else:
-                break
+                print(output)
         
 # call main
 if __name__ == "__main__":
