@@ -56,15 +56,15 @@ def withdraw(name, value):
         return "Cannot withdraw a negative amount."
     
     if name not in data:
-        print("can't withdraw money because you don't have a registered account")
+        return "Can't withdraw money because you don't have a registered account."
     else:
         balance = data[name]
         if value > balance:
-            print("sorry, you don't have enough money to withdraw")
+            return "Sorry, you don't have enough money to withdraw."
         else:
             data[name] = balance - value
             save_data(data)
-            print("withdrawal successful")
+            return "Withdrawal successful."
 
 # function for checking balance
 def check(name):
