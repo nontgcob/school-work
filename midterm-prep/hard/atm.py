@@ -5,11 +5,7 @@ import json
 import os
 
 # declare variables
-data = {}
-two_options = ["deposit", "withdraw"]
-one_option = ["check"]
-# DATA_FILE = "atm_data.json"
-DATA_FILE = "test_atm_data.json"
+DATA_FILE = "./test_atm_data.json"
 
 # function for loading data
 def load_data():
@@ -23,51 +19,51 @@ def save_data(data):
     with open(DATA_FILE, 'w') as file:
         json.dump(data, file)
 
-data = load_data()
-
 # function for depositing money
 def deposit(name, value):
+    data = load_data()
     try:
         value = float(value)
     except ValueError:
-        return "Invalid deposit amount. Please enter a numeric value."
+        return "invalid deposit amount. Please enter a numeric value."
 
     if value < 0:
-        return "Cannot deposit a negative amount."
+        return "cannot deposit a negative amount."
 
     if name not in data:
         data[name] = value
-        message = "account created and deposit successful"
+        save_data(data)
+        return "account created and deposit successful"
     else:
-        balance = data[name]
-        data[name] = balance + value
-        message = "deposit successful"
-    save_data(data)
-    return message
+        data[name] += value
+        save_data(data)
+        return "deposit successful"
 
 # function for withdrawing money
 def withdraw(name, value):
+    data = load_data()
     try:
         value = float(value)
     except ValueError:
-        return "Invalid withdrawal amount. Please enter a numeric value."
+        return "invalid withdrawal amount. Please enter a numeric value."
     
     if value < 0:
-        return "Cannot withdraw a negative amount."
+        return "cannot withdraw a negative amount."
     
     if name not in data:
-        return "Can't withdraw money because you don't have a registered account."
+        return "can't withdraw money because you don't have a registered account."
     else:
         balance = data[name]
         if value > balance:
-            return "Sorry, you don't have enough money to withdraw."
+            return "sorry, you don't have enough money to withdraw."
         else:
-            data[name] = balance - value
+            data[name] -= value
             save_data(data)
-            return "Withdrawal successful."
+            return "withdrawal successful."
 
 # function for checking balance
 def check(name):
+    data = load_data()
     if name in data:
         balance = data[name]
         return f"your balance is {balance} dollars"
@@ -84,27 +80,25 @@ def callings(name, action, value):
         return check(name)
 
 def do_the_rest(command):
-            parts = command.split()
-            if len(parts) == 3:
-                name, action, value = parts
-
-                if action not in two_options:
-                    return "loop"
-                try:
-                    value = float(value)
-                except ValueError:
-                    return "loop"
-            elif len(parts) == 2:
-                name, action = parts
-                value = None
-
-                if action not in one_option:
-                    return "loop"
-            else:
-                return "loop"
-            if not name.isalpha():
-                return "loop"
-            return callings(name, action, value)
+    parts = command.split()
+    if len(parts) == 3:
+        name, action, value = parts
+        if action not in ["deposit", "withdraw"]:
+            return "loop"
+        try:
+            value = float(value)
+        except ValueError:
+            return "loop"
+    elif len(parts) == 2:
+        name, action = parts
+        value = None
+        if action != "check":
+            return "loop"
+    else:
+        return "loop"
+    if not name.isalpha():
+        return "loop"
+    return callings(name, action, value)
 
 # main program
 def main():
@@ -122,7 +116,7 @@ def main():
         else:
             output = do_the_rest(command)
             if output == "loop":
-                print("Invalid command. Please try again.")
+                print("invalid command. Please try again.")
                 continue
             else:
                 print(output)
