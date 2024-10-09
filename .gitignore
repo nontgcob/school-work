@@ -6,4 +6,7 @@ venv/
 *.zip
 *.git
 .DS_Store
+..bfg-report/
+
+# just to be safe
 bfg-report/
