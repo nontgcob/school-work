@@ -4,7 +4,6 @@ venv/
 *.json
 *.jar
 *.zip
-*.git
 .DS_Store
 ..bfg-report/
 
