@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Quiz App</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        div div button {
+            width: 100px;
+            height: 40px;
+            margin: 5px;
+        }
+
+        .selected {
+            background-color: lightblue;
+        }
+
+        .feedback {
+            margin: 10px 0;
+            font-weight: bold;
+            color: #333;
+        }
+    </style>
+    <script>
+        let selectedButton = null;
+        const correctAnswer = 2;
+
+        function selectOption(button) {
+            if (selectedButton) {
+                selectedButton.classList.remove("selected");
+            }
+            selectedButton = button;
+            selectedButton.classList.add("selected");
+            document.getElementById("feedback").innerText = "";
+        }
+
+        function submitAnswer() {
+            if (!selectedButton) {
+                alert("Please select an answer.");
+                return;
+            }
+
+            const answerText = selectedButton.innerText;
+            const selectedAnswer = parseInt(answerText.match(/\d+/)[0]);
+
+            const feedback = document.getElementById("feedback");
+            if (selectedAnswer === correctAnswer) {
+                feedback.innerText = "Correct! The capital of France is Paris.";
+                feedback.style.color = "green";
+            } else {
+                feedback.innerText = "Incorrect. The correct answer is Paris.";
+                feedback.style.color = "red";
+            }
+
+            selectedButton.classList.remove("selected");
+            selectedButton = null;
+        }
+
+        function restartQuiz() {
+            if (selectedButton) {
+                selectedButton.classList.remove("selected");
+            }
+            selectedButton = null;
+            document.getElementById("feedback").innerText = "";
+        }
+    </script>
+</head>
+<body style="width: 100%; height: 100vh; margin-top: 100px;">
+    <div style="width: 600px; height: fit-content; border: 1px solid black; border-radius: 20px; display: flex; align-items: center; flex-direction: column; margin: auto auto;">
+        <h2 style="text-align: center; margin: 20px auto">Simple Quiz App</h2>
+        <p style="text-align: center; margin-bottom: 20px;">Question: What is the capital of France?</p>
+        <div class="options">
+            <button onclick="selectOption(this)">Option 1: Berlin</button>
+            <button onclick="selectOption(this)">Option 2: Paris</button>
+            <button onclick="selectOption(this)">Option 3: Madrid</button>
+            <button onclick="selectOption(this)">Option 4: Rome</button>
+        </div>
+        <p id="feedback" class="feedback"></p>
+        <button style="margin-top: 10px; padding: 10px 30px;" onclick="submitAnswer()">Submit</button>
+        <button style="margin-top: 10px; margin-bottom: 20px; padding: 10px 30px;" onclick="restartQuiz()">Restart</button>
+    </div>
+</body>
+</html>
