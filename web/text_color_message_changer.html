@@ -1,0 +1,46 @@
+<!-- create four buttons to change the color of the text, 
+ if the first button is clicked, change the color to red, 
+ if the second button is clicked, change the color to green, 
+ if the third button is clicked, change the color to blue,
+ if the fourth button is clicked, change the color to black -->
+
+<!-- create two buttons to change the text message,
+ if the first button is clicked, change the message to "Bye",
+ if the second button is clicked, change the message back to "Hello world" -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Color Message Changer</title>
+    <script>
+        function changeText(){
+            document.getElementById("text").innerHTML = "Bye";
+        }
+        function changeTextBack(){
+            document.getElementById("text").innerHTML = "Hello world";
+        }
+    </script>
+    <style>
+        .special-btn {
+            background-color: black;
+            color: white;
+        }
+        .group {
+            margin-top: 4px;
+        }
+    </style>
+</head>
+<body>
+    <p id="text">Hello world</p>
+    <button type="button" onclick='document.getElementById("text").style.color = "red";'>Red</button>
+    <button type="button" onclick='document.getElementById("text").style.color = "green";'>Green</button>
+    <button type="button" onclick='document.getElementById("text").style.color = "blue";'>Blue</button>
+    <button type="button" onclick='document.getElementById("text").style.color = "black";'>Black</button>
+    <div class="group">
+        <button type="button" onclick='changeText();' class="special-btn">Change Text</button>
+        <button type="button" onclick='changeTextBack();' class="special-btn">Change Text Back</button>
+    </div>
+</body>
+</html>
