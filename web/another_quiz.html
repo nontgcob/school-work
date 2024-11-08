@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nont's Favorite Food Quiz</title>
+</head>
+<body>
+
+  <h2>What is Nont's Favorite Food?</h2>
+  <form id="foodQuizForm">
+    <label>
+      <input type="radio" name="food" value="Pad Thai" required>
+      Pad Thai
+    </label><br>
+    <label>
+      <input type="radio" name="food" value="Tom Yum Kung">
+      Tom Yum Kung
+    </label><br>
+    <label>
+      <input type="radio" name="food" value="Moo Ping">
+      Moo Ping
+    </label><br><br>
+    <button type="button" onclick="checkAnswer()">Submit</button>
+  </form>
+
+  <div id="result"></div>
+
+  <script>
+    function checkAnswer() {
+      // Get the selected food option
+      const foodOptions = document.getElementsByName("food");
+      let selectedFood = "";
+      
+      // Find the selected option
+      for (const option of foodOptions) {
+        if (option.checked) {
+          selectedFood = option.value;
+          break;
+        }
+      }
+
+    // Check if the answer is correct
+    const resultDiv = document.getElementById("result");
+    if (selectedFood === "Pad Thai") {
+    resultDiv.innerHTML = '<strong style="color: green;">Correct!</strong> Nont\'s favorite food is Pad Thai.';
+    } else {
+    resultDiv.innerHTML = '<strong style="color: red;">Incorrect.</strong> Try again!';
+    }
+
+    }
+  </script>
+
+</body>
+</html>
