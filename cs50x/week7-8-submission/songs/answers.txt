@@ -1,0 +1,18 @@
+To characterize a person's audio aura, we take a look at the average energy, valence, and danceability of the top 100 songs
+that person listens to, and from my calculation using a few SQL queries, this is what I have gathered these information:
+average energy       : 0.65906
+average valence      : 0.484443
+average danceability : 0.71646
+
+Since we have 3 separate values, it might be a good idea to combine it into just 1 number by averaging the values for simplicity.
+(0.65906 + 0.484443 + 0.71646) / 3 = 0.61998766666
+
+This number signifies that the audio aura of that person is just slightly above half of the spectrum (value range is from 0 to 1.)
+As you can see, this number doesn't really give us any insight about the person's listening behavior or their 2 most prominent moods.
+
+To enhance this algorithm, we should write the program to count all the moods of the songs that the person listens to and then pick
+just the top 2 moods to represent the person's audio aura instead.
+
+But as we don't have the mood labelled directly for each song, using values like
+danceability, energy, key, loudness, speechiness, valence, tempo to calculate a separate value that is associated with the mood of music
+might be the way to go if we want to gain some understanding about the person's listening pattern(s) and moods.
